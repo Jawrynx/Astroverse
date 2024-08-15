@@ -1,23 +1,37 @@
-import logo from './logo.svg';
+import React, { useState, useEffect } from 'react';
+import Astroverse from './components/Astroverse/Astroverse';
+import Login from './components/interfaces/Login';
+import Signup from './components/interfaces/Signup';
+import Background from './Background';
 import './App.css';
 
+
+console.log(useState);
+
 function App() {
+  const [isLoading, setIsLoading] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+  }, []);
+
+  console.log(isLoading);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='App'>
+      <Background className='app-background'>
+        {isLoading ? (
+          <div className='loading'><p>Loading...</p></div>
+        ) : (
+          <>
+            <Astroverse />
+            {!isAuthenticated && <Login setIsAuthenticated={setIsAuthenticated} />}
+          </>
+        )}
+      </Background>
     </div>
   );
 }
